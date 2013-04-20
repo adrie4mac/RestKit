@@ -92,9 +92,9 @@ extern NSString * const kRKStringBoundary;
         NSString *MIMEType = [filePath MIMETypeForPathExtension];
         if (! MIMEType) MIMEType = @"application/octet-stream";
         _MIMEType = [MIMEType retain];
-        _bodyStream = [[NSInputStream alloc] initWithFileAtPath:filePath];
+        NSError * error = nil;
+        _bodyStream = [[[SSFileManagerFactory defaultManager] getReadStream:filePath error:&error] retain];
 
-        NSError *error;
         NSDictionary *attributes = [[SSFileManagerFactory defaultManager] attributesOfItemAtPath:filePath error:&error];
         if (attributes) {
             _bodyLength    = [[attributes objectForKey:NSFileSize] unsignedIntegerValue];
