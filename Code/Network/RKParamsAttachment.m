@@ -35,7 +35,8 @@ extern NSString * const kRKStringBoundary;
 
 @implementation RKParamsAttachment
 
-@synthesize documentID = _documentID;
+@synthesize customMultipartIdentifierName = _customMultipartIdentifierName;
+@synthesize customMultipartIdentifierValue = _customMultipartIdentifierValue;
 @synthesize filePath = _filePath;
 @synthesize fileName = _fileName;
 @synthesize MIMEType = _MIMEType;
@@ -109,7 +110,8 @@ extern NSString * const kRKStringBoundary;
 
 - (void)dealloc
 {
-    [_documentID release];
+    [_customMultipartIdentifierName release];
+    [_customMultipartIdentifierValue release];
     [_value release];
     [_name release];
     [_body release];
@@ -137,10 +139,10 @@ extern NSString * const kRKStringBoundary;
 - (void)open
 {
 	// Generate the MIME header for this part
-	if (self.documentID && self.MIMEType) {
+	if (self.customMultipartIdentifierName && self.customMultipartIdentifierValue && self.MIMEType) {
 		// Typical for file attachments
-		_MIMEHeader = [[[NSString stringWithFormat:@"--%@\r\nContent-Disposition: file; documentid=%@\r\nContent-Type: %@\r\n\r\n",
-						 [self MIMEBoundary], self.documentID, self.MIMEType] dataUsingEncoding:NSUTF8StringEncoding] retain];
+		_MIMEHeader = [[[NSString stringWithFormat:@"--%@\r\nContent-Disposition: file; %@=%@\r\nContent-Type: %@\r\n\r\n",
+						 [self MIMEBoundary], self.customMultipartIdentifierName, self.customMultipartIdentifierValue, self.MIMEType] dataUsingEncoding:NSUTF8StringEncoding] retain];
 	} else if (self.fileName && self.MIMEType) {
 		// Typical for file attachments
 		_MIMEHeader = [[[NSString stringWithFormat:@"--%@\r\nContent-Disposition: form-data; name=\"%@\"; "

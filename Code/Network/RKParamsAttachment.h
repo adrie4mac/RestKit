@@ -82,9 +82,10 @@
 ///-----------------------------------------------------------------------------
 
 /**
- DocuSign-Specific, I don't see a clean way to do this in a subclass.
+ Add a custom identifier to multipart headers
  */
-@property (nonatomic, copy) NSString *documentID;
+@property (nonatomic, copy) NSString *customMultipartIdentifierName;
+@property (nonatomic, copy) NSString *customMultipartIdentifierValue;
 
 /**
  The parameter name of this attachment in the multi-part document.
