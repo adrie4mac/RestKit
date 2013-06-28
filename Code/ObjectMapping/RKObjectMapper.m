@@ -359,7 +359,11 @@
         if (mappableData) {
             id mappingResult = [self performMappingForObject:mappableData atKeyPath:@"" usingMapping:mappingsForContext];
             foundMappable = YES;
-            results = [NSDictionary dictionaryWithObject:mappingResult forKey:@""];
+            if (mappingResult) {
+                results = [NSDictionary dictionaryWithObject:mappingResult forKey:@""];
+            } else {
+                foundMappable = NO;
+            }
         }
     }
 
