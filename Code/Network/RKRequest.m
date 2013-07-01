@@ -629,7 +629,6 @@ RKRequestMethod RKRequestMethodTypeFromName(NSString *methodName) {
 
 - (void)timeout
 {
-    [self cancelAndInformDelegate:NO];
     RKLogError(@"Failed to send request to %@ due to connection timeout. Timeout interval = %f", [[self URL] absoluteString], self.timeoutInterval);
     NSString *errorMessage = [NSString stringWithFormat:@"The client timed out connecting to the resource at %@", [[self URL] absoluteString]];
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -637,6 +636,7 @@ RKRequestMethod RKRequestMethodTypeFromName(NSString *methodName) {
                               nil];
     NSError *error = [NSError errorWithDomain:RKErrorDomain code:RKRequestConnectionTimeoutError userInfo:userInfo];
     [self didFailLoadWithError:error];
+    [self cancelAndInformDelegate:NO];
 }
 
 - (void)invalidateTimeoutTimer
