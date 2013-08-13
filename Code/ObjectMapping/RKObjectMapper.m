@@ -360,7 +360,7 @@
             id mappingResult = [self performMappingForObject:mappableData atKeyPath:@"" usingMapping:mappingsForContext];
             foundMappable = YES;
             if (mappingResult) {
-                results = [NSDictionary dictionaryWithObject:mappingResult forKey:@""];
+                results = [NSMutableDictionary dictionaryWithObject:mappingResult forKey:@""];
             } else {
                 foundMappable = NO;
             }
