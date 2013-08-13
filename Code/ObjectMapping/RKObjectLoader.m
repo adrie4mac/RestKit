@@ -392,8 +392,9 @@
 
     // TODO: This is an informal protocol ATM. Maybe its not obvious enough?
     if (self.sourceObject) {
-        if ([self.sourceObject respondsToSelector:@selector(willSendWithObjectLoader:)]) {
-            [self.sourceObject performSelector:@selector(willSendWithObjectLoader:) withObject:self];
+        SEL willSendSelector = NSSelectorFromString(@"willSendWithObjectLoader:");
+        if ([self.sourceObject respondsToSelector:willSendSelector]) {
+            [self.sourceObject performSelector:willSendSelector withObject:self];
         }
     }
 
