@@ -192,9 +192,6 @@
 
 - (RKObjectMappingResult *)mapResponseWithMappingProvider:(RKObjectMappingProvider *)mappingProvider toObject:(id)targetObject inContext:(RKObjectMappingProviderContext)context error:(NSError **)error
 {
-    id<RKParser> parser = [[RKParserRegistry sharedRegistry] parserForMIMEType:self.response.MIMEType];
-    NSAssert1(parser, @"Cannot perform object load without a parser for MIME Type '%@'", self.response.MIMEType);
-
     // Check that there is actually content in the response body for mapping. It is possible to get back a 200 response
     // with the appropriate MIME Type with no content (such as for a successful PUT or DELETE). Make sure we don't generate an error
     // in these cases
@@ -208,6 +205,9 @@
 
         return [RKObjectMappingResult mappingResultWithDictionary:[NSDictionary dictionary]];
     }
+    
+    id<RKParser> parser = [[RKParserRegistry sharedRegistry] parserForMIMEType:self.response.MIMEType];
+    NSAssert1(parser, @"Cannot perform object load without a parser for MIME Type '%@'", self.response.MIMEType);
 
     id parsedData = [parser objectFromString:bodyAsString error:error];
     if (parsedData == nil && error) {
@@ -324,7 +324,7 @@
         }
         [self informDelegateOfObjectLoadWithResultDictionary:resultDictionary];
         return NO;
-    } else if (NO == [self canParseMIMEType:[self.response MIMEType]]) {
+    } else if (NO == [self canParseMIMEType:[self.response MIMEType]] && [[self.response body] length] > 0) {
         // We can't parse the response, it's unmappable regardless of the status code
         RKLogWarning(@"Encountered unexpected response with status code: %ld (MIME Type: %@ -> URL: %@)", (long)self.response.statusCode, self.response.MIMEType, self.URL);
         NSError *error = [NSError errorWithDomain:RKErrorDomain code:RKObjectLoaderUnexpectedResponseError userInfo:nil];
