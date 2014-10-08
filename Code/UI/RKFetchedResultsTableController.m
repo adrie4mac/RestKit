@@ -606,7 +606,7 @@
             break;
 
         default:
-            RKLogTrace(@"Encountered unexpected section changeType: %d", type);
+            RKLogTrace(@"Encountered unexpected section changeType: %lu", (unsigned long)type);
             break;
     }
 }
@@ -650,7 +650,7 @@
             break;
 
         default:
-            RKLogTrace(@"Encountered unexpected object changeType: %d", type);
+            RKLogTrace(@"Encountered unexpected object changeType: %lu", (unsigned long)type);
             break;
     }
 }
