@@ -3195,6 +3195,7 @@
 				PUBLIC_HEADERS_FOLDER_PATH = Headers/RestKit;
 				SKIP_INSTALL = YES;
 				SYMROOT = "$(SRCROOT)/Build/Products";
+				WARNING_CFLAGS = "-Wno-objc-designated-initializers";
 			};
 			name = Debug;
 		};
@@ -3212,6 +3213,7 @@
 				PUBLIC_HEADERS_FOLDER_PATH = Headers/RestKit;
 				SKIP_INSTALL = YES;
 				SYMROOT = "$(SRCROOT)/Build/Products";
+				WARNING_CFLAGS = "-Wno-objc-designated-initializers";
 			};
 			name = Release;
 		};
