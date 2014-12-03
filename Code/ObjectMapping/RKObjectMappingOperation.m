@@ -224,11 +224,12 @@ BOOL RKObjectIsValueEqualToValue(id sourceValue, id destinationValue) {
                  [sourceType isSubclassOfClass:NSClassFromString(@"NSCFBoolean")] ) &&
                [destinationType isSubclassOfClass:[NSString class]]) {
         return ([value boolValue] ? @"true" : @"false");
-        if ([destinationType isSubclassOfClass:[NSDate class]]) {
-            return [NSDate dateWithTimeIntervalSince1970:[(NSNumber *)value intValue]];
-        } else if (([sourceType isSubclassOfClass:NSClassFromString(@"__NSCFBoolean")] || [sourceType isSubclassOfClass:NSClassFromString(@"NSCFBoolean")]) && [destinationType isSubclassOfClass:[NSString class]]) {
-            return ([value boolValue] ? @"true" : @"false");
-        }
+        // TODO: Look into whether the following code is actually not necessary
+//        if ([destinationType isSubclassOfClass:[NSDate class]]) {
+//            return [NSDate dateWithTimeIntervalSince1970:[(NSNumber *)value intValue]];
+//        } else if (([sourceType isSubclassOfClass:NSClassFromString(@"__NSCFBoolean")] || [sourceType isSubclassOfClass:NSClassFromString(@"NSCFBoolean")]) && [destinationType isSubclassOfClass:[NSString class]]) {
+//            return ([value boolValue] ? @"true" : @"false");
+//        }
     } else if ([destinationType isSubclassOfClass:[NSString class]] && [value respondsToSelector:@selector(stringValue)]) {
         return [value stringValue];
     } else if ([destinationType isSubclassOfClass:[NSString class]] && [value isKindOfClass:[NSDate class]]) {
